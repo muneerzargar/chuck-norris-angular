@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  jokesApiConfig : {
+    uri: 'http://api.icndb.com/jokes/random/10'
+  },
+  favoriteJokesApiConfig : {
+    uri: 'http://api.icndb.com/jokes/random/1',
+    interval: 5000
+  }
 };
 
 /*

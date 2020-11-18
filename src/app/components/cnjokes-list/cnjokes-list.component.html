@@ -1,0 +1,5 @@
+<ul class="">
+    <li *ngFor="let item of list">
+        <app-cnjoke-item [jokeItem] = "item" (itemEvent)="onItemClick($event)"></app-cnjoke-item>
+    </li>
+</ul>

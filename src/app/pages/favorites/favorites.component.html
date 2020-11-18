@@ -1,0 +1,3 @@
+<button (click) = "onButtonToggle()"> Start/Stop </button>
+<app-cnjokes-list *ngIf = "favoriteList.length; else noContent " [list] = "favoriteList"></app-cnjokes-list>
+<ng-template #noContent> No Favorites Available ... </ng-template>

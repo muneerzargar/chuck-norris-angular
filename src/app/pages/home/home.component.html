@@ -1,0 +1,6 @@
+<button (click) = "onJokesClick()">
+    Fetch Jokes
+</button>
+
+<app-cnjokes-list *ngIf = "jokesList.length; else noContent " [list] = "jokesList"></app-cnjokes-list>
+<ng-template #noContent> No Data Available ... </ng-template>
