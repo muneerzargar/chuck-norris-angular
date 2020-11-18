@@ -1,0 +1,28 @@
+.container {
+    display: grid;
+    gap: 20px;
+    grid-template-areas: 
+      "header"
+      "nav"
+      "content";
+      padding: 2rem 5rem;
+  }
+  .main-head {
+    grid-area: header;
+  }
+  .content {
+    grid-area: content;
+  }
+  .main-nav {
+    grid-area: nav;
+  }
+  nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+     li {
+         margin-right: 8px;
+         font-size: 15px;
+     }
+  }
+  

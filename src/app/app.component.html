@@ -1,11 +1,16 @@
-<div class = "conatiner">
-
-  <h1> Chuck Norris App</h1>
-  <nav>
+<div class = "container">
+  <header class="main-head"> 
+    <h1>
+      Chuck Norris App
+    </h1>
+  </header>
+  <nav class="main-nav">
     <ul>
       <li><a [routerLink]="['/home']">Home</a></li>
       <li><a [routerLink]="['/favorites']">Favorites</a></li>
     </ul>
   </nav>
+<div class="content">
   <router-outlet></router-outlet>
+</div>
 </div>

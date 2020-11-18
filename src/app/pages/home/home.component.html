@@ -3,4 +3,8 @@
 </button>
 
 <app-cnjokes-list *ngIf = "jokesList.length; else noContent " [list] = "jokesList"></app-cnjokes-list>
-<ng-template #noContent> No Data Available ... </ng-template>
+<ng-template #noContent> 
+    <p>
+         No Data Available ... 
+    </p>
+</ng-template>
