@@ -21,7 +21,7 @@ export class CNJokesListComponent implements OnInit {
     if (type === 'favorite') {
       this.jokeSrv.addToFavorites(joke);
     } else if ( type === 'delete') {
-      this.jokeSrv.deleteFromFavorites(this.list, joke);
+      this.jokeSrv.deleteFromFavorites(joke);
     }
   }
 

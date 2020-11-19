@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { RequestService } from 'src/app/services/request.service';
 import { IResponse, IJokeItem } from 'src/app/interfaces/CN.interface';
 import { JokesService } from 'src/app/services/jokes.service';
@@ -19,25 +18,8 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (localStorage.getItem('favorites') !== null) {
-      this.favoriteList = JSON.parse(localStorage.getItem('favorites'));
+      this.jokeSrv.jokes = JSON.parse(localStorage.getItem('favorites'));
     }
-
-    this.jokeSrv.jokesData.subscribe((jokeData) => {
-      if (jokeData.length) {
-        console.log('I am in favorites', jokeData);
-        this.favoriteList = jokeData.map((item) => {
-          const newItem = {...item};
-          newItem.buttonLabel = 'Delete Favorite';
-          newItem.type = 'delete';
-          return newItem;
-        });
-        this._setFavoritesStorage();
-      } else {
-        this.favoriteList = [];
-        localStorage.clear();
-      }
-  });
-  // TODO: Add condition here ..
     this._getFavorites();
   }
 
@@ -59,17 +41,11 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   }
 
   _getFavorites() {
-
       this.favoriteSubscription = this.request.getfavoriteOnInterval().subscribe((data: IResponse) => {
-        if (this.favoriteList.length < 10 ) {
+        if (this.jokeSrv.jokes.length < 10 ) {
           const {value} = data;
           const [favorite] = value;
-          favorite.buttonLabel = 'Delete Favorite';
-          favorite.type = 'delete';
-          if (!this.favoriteList.includes(favorite)) {
-            this.favoriteList.push(favorite);
-          }
-          this._setFavoritesStorage();
+          this.jokeSrv.addToFavorites(favorite);
         } else {
           if (this.favoriteSubscription) {
             this.favoriteSubscription.unsubscribe();
@@ -77,9 +53,4 @@ export class FavoritesComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-  _setFavoritesStorage() {
-    localStorage.setItem('favorites', JSON.stringify(this.favoriteList));
-  }
-
 }

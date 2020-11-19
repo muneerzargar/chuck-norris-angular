@@ -5,21 +5,37 @@ import { IJokeItem } from '../interfaces/CN.interface';
   providedIn: 'root'
 })
 export class JokesService {
-  private savedJokesList: IJokeItem[] = [];
   private jokesDataSource = new BehaviorSubject([]);
-  jokesData = this.jokesDataSource.asObservable();
 
   constructor() { }
 
-  addToFavorites(item: IJokeItem) {
-    if (!this.savedJokesList.includes(item)) {
-      this.savedJokesList.push(item);
-    }
-    this.jokesDataSource.next(this.savedJokesList);
+  get jokes(): IJokeItem[] {
+    return this.jokesDataSource.getValue();
   }
 
-  deleteFromFavorites(favoriteList: IJokeItem[], item: IJokeItem) {
-    const list = favoriteList.filter(jItem => jItem.id !== item.id);
-    this.jokesDataSource.next(list);
+  set jokes(val: IJokeItem[]) {
+    this.jokesDataSource.next(val);
+  }
+
+  addToFavorites(item: IJokeItem) {
+    const newItem = {...item};
+    newItem.buttonLabel = 'Delete';
+    newItem.type = 'delete';
+    if (!this.jokes.some(fav => fav.id === newItem.id)) {
+      if (this.jokes.length < 10) {
+        this.jokes = [
+          ...this.jokes,
+          newItem
+        ];
+      }
+    }
+    localStorage.setItem('favorites', JSON.stringify(this.jokes));
+    console.log('*** in add ***', this.jokes);
+  }
+
+  deleteFromFavorites( item: IJokeItem) {
+    this.jokes = this.jokes.filter(jItem => jItem.id !== item.id);
+    localStorage.setItem('favorites', JSON.stringify(this.jokes));
+    console.log('*** in delete ***', this.jokes);
   }
 }
